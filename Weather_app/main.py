@@ -1,20 +1,19 @@
 import requests
 import datetime
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
+from openpyxl.styles import Font
 from os import path
 
 API_KEY = '73b69dd502289cfcb1322eb34935b90b'
 API_URL = 'https://api.openweathermap.org/data/2.5/weather'
 UNITS = 'metric'
 LANG = 'en'
-FILE_EXCEL = 'data.xlsx'
+FILE_EXCEL = './data.xlsx'
 
 
 def get_date_time(ts, timezone, dt_format="%H:%M:%S"):
     tz = datetime.timezone(datetime.timedelta(seconds=timezone))
     return datetime.datetime.fromtimestamp(ts, tz=tz).strftime(dt_format)
-
-
 
 
 def get_weather(city_name):
@@ -53,7 +52,30 @@ def print_weather(data):
         print("+" * 50)
         return data
 
-      
+
+def save_excel(data):
+    if data['cod'] == 200:
+        if path.exists(FILE_EXCEL):
+            wb = load_workbook(filename=FILE_EXCEL)
+            ws = wb.active           
+        else:
+            wb = Workbook()
+            ws = wb.active
+            ws.title = "Statistic of requests"
+            ws.append(['Date of request', 'City', 'Temperature'])
+            ft = Font(bold=True, color='0000FFFF')
+            a1 = ws['A1']
+            b1 = ws['B1']
+            c1 = ws['C1']
+            a1.font = b1.font = c1.font = ft
+
+        ws.append([datetime.datetime.now(), f"{data['name']}, {data['sys']['country']}", data['main']['temp']])
+        wb.save(filename=FILE_EXCEL)    
+    else:
+        pass
+
+
+
 print('*' * 70)
 print(("""* Hi! I'll help you to know weater in every city of the world.
 * Just enter request in format: city[,country_code]
@@ -68,7 +90,9 @@ while True:
     else:
         weather = get_weather(q)
         print("+" * 50)
-        weatherer = print_weather(weather)
+        print_weather(weather)
+        save_excel(weather)
+
 
 """
 {'coord': {'lon': -0.1257, 'lat': 51.5085}, 
