@@ -22,6 +22,19 @@ def get_weather(city_name):
     except:
         return {"cod": 0, "message": "Failed data access"}
 
+
+def print_weather(data):
+    
+
+
+
+
+
+
+
+
+
+
 print('*' * 70)
 print(("""* Hi! I'll help you to know weater in every city of the world.
 * Just enter request in format: city[,country_code]
