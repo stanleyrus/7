@@ -24,6 +24,7 @@ def get_weather(city_name):
 
 
 def print_weather(data):
+
     if data['cod'] != 200:
         print(data['message'])
         return {}
@@ -42,7 +43,7 @@ def print_weather(data):
         print("+" * 50)
         return data
 
-
+      
 print('*' * 70)
 print(("""* Hi! I'll help you to know weater in every city of the world.
 * Just enter request in format: city[,country_code]
