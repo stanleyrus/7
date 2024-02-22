@@ -16,8 +16,6 @@ def get_date_time(ts, timezone, dt_format="%H:%M:%S"):
     return datetime.datetime.fromtimestamp(ts, tz=tz).strftime(dt_format)
 
 
-
-
 def get_weather(city_name):
     params = {
         "appid": API_KEY,
@@ -33,6 +31,7 @@ def get_weather(city_name):
 
 
 def print_weather(data):
+
     if data['cod'] != 200:
         print(data['message'])
         return {}
@@ -74,6 +73,7 @@ def save_excel(data):
         wb.save(filename=FILE_EXCEL)    
     else:
         pass
+
 
 
 print('*' * 70)
