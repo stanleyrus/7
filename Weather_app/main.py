@@ -9,6 +9,14 @@ UNITS = 'metric'
 LANG = 'en'
 FILE_EXCEL = 'data.xlsx'
 
+
+def get_date_time(ts, timezone, dt_format="%H:%M:%S"):
+    tz = datetime.timezone(datetime.timedelta(seconds=timezone))
+    return datetime.datetime.fromtimestamp(ts, tz=tz).strftime(dt_format)
+
+
+
+
 def get_weather(city_name):
     params = {
         "appid": API_KEY,
@@ -28,15 +36,17 @@ def print_weather(data):
         print(data['message'])
         return {}
     else:
+        sunrise_time = get_date_time(data['sys']['sunrise'], data['timezone'])
+        sunset_time = get_date_time(data['sys']['sunset'], data['timezone'])
         print(f"""
         Localization: {data['name']}, Country: {data['sys']['country']}
         Temreture: {data['main']['temp']} ℃
-        Pressure: {data['main']['pressure']}
+        Pressure: {data['main']['pressure']} Pa
         Humidity: {data['main']['humidity']}%
         Speed of wind: {data['wind']['speed']} m/sec
         Weather conditions: {data['weather'][0]['description']}
-        Sunrise: {datetime.datetime.fromtimestamp(data['sys']['sunrise'])}
-        Sunset time: {datetime.datetime.fromtimestamp(data['sys']['sunset'])}
+        Sunrise: {sunrise_time}
+        Sunset time: {sunset_time}
         """)
 
         print("+" * 50)
@@ -57,8 +67,7 @@ while True:
     else:
         weather = get_weather(q)
         print("+" * 50)
-        weather = print_weather(weather)
-        print(weather)
+        weatherer = print_weather(weather)
 
 """
 {'coord': {'lon': -0.1257, 'lat': 51.5085}, 
@@ -73,6 +82,9 @@ while True:
 'id': 2643743, 
 'name': 'London', 
 'cod': 200}
+
+'country': 'BY', 'sunrise': 1708578963, 'sunset': 1708615856, 'timezone': 10800
+'country': 'GR', 'sunrise': 1708578941, 'sunset': 1708618654, 'timezone': 7200
 """
 # r = requests.get(API_URL, params=params)
 # # res =
