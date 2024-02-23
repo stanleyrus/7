@@ -10,8 +10,7 @@ print('*' * 70)
 while True:
     q = input('Please enter the name of the city: ')
     if not q:
-        print('See you later :)')
-        break
+        exit('See you later :)')
     else:
         weather = f.get_weather(q)
         print("+" * 50)
