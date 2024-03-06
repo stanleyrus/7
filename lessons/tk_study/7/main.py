@@ -25,4 +25,5 @@ f1.place(relwidth=0.9, relheight=0.1, relx=0.5, rely=0.05, anchor='center')
 tk.Entry(f1).place(relwidth=0.7, relheight=0.9, rely=0.05, relx=0.01, anchor='nw')
 tk.Button(f1, text='Send').place(relwidth=0.27, relheight=0.9, rely=0.05, relx=0.72, anchor='nw')
 
+
 root.mainloop()
