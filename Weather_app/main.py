@@ -1,5 +1,6 @@
 import funcsss as f
 import config
+import datetime
 
 print('*' * 70)
 print(("""* Hi! I'll help you to know weater in every city of the world.
